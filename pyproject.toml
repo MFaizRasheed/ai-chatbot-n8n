@@ -3,7 +3,7 @@ name = "ai-chatbot"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]>=0.141.1",
     "httpx>=0.28.1",
@@ -18,3 +18,7 @@ dev = [
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.0",
 ]
+
+# Vercel deployment config
+[tool.vercel]
+entrypoint = "app.main:app"

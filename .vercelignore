@@ -1,0 +1,8 @@
+# Vercel deployment excludes (keeps the function bundle small)
+.venv
+.freebuff
+Workflow
+tests
+__pycache__
+.env
+.git
