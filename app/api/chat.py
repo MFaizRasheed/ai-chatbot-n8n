@@ -1,20 +1,27 @@
+import logging
+
 from fastapi import APIRouter, HTTPException
 
 from app.models.chat import ChatRequest, ChatResponse
-from app.services.n8n import N8NService
+from app.services.agent import agent_service
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api", tags=["chat"])
-
-n8n_service = N8NService()
 
 
 @router.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest) -> ChatResponse:
     try:
-        return await n8n_service.send_message(request)
+        response = await agent_service.chat(
+            message=request.message,
+            session_id=request.session_id,
+        )
+        return ChatResponse(response=response)
 
     except Exception as exc:
+        logger.exception("Chat request failed")
         raise HTTPException(
             status_code=502,
-            detail="Unable to communicate with the AI service.",
+            detail="Unable to get a response from the AI service.",
         ) from exc

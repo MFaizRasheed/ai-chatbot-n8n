@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -6,6 +7,9 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.chat import router as chat_router
 from app.config import get_settings
+
+# Make application logs (failover, tools, errors) visible in uvicorn/Vercel output.
+logging.basicConfig(level=logging.INFO, force=True)
 
 settings = get_settings()
 
